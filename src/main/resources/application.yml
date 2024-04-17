@@ -1,0 +1,36 @@
+server:
+  port: 9898
+management:
+  health:
+    livenessState.enabled: true
+    readinessState.enabled: true
+  endpoint.health.probes.enabled: true
+
+spring:
+  application:
+    name: IDENTITY-SERVICE
+  datasource:
+    url: jdbc:postgresql://localhost:5432/users
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: Admin@123
+    jpa:
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: false
+      hibernate:
+        ddl-auto: create
+  jackson:
+    deserialization:
+      FAIL_ON_IGNORED_PROPERTIES: false
+    serialization:
+      INDENT_OUTPUT: false
+      WRITE_DATES_AS_TIMESTAMPS: false
+      WRITE_BIGDECIMAL_AS_PLAIN: true
+  sql:
+    init:
+      mode: always
+      platform: postgres
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
