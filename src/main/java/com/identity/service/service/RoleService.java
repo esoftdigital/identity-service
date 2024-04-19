@@ -22,18 +22,18 @@ public class RoleService {
 		return roleDaoService.procAddRole(roles);
 	}
 
-	public Roles findOne(short id) {
+	/*public Roles findOne(short id) {
 
 		Roles roles = new Roles();
 		roles.setFlagId(Util.ROLE_FIND_ONE_FLAG);
 		roles.setRoleId(id);
 		List<Roles> roleList = roleDaoService.procAddRole(roles);
-		if (roleList.size() > 0)
+		if (!roleList.isEmpty())
 
 			return roleList.get(0);
 		else
 			return null;
-	}
+	}*/
 
 	public Roles save(Roles role) {
 		role.setFlagId(Util.ROLE_SAVE_FLAG);

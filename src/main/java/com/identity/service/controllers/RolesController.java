@@ -56,7 +56,7 @@ public class RolesController {
 //		return ResponseEntity.ok(new MessageResponse("Deleted Successfully."));
 //	}
 	
-	@GetMapping("/{id}")
+/*	@GetMapping("/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public ResponseEntity<Roles> getRole(@PathVariable short id) {
 
@@ -64,7 +64,7 @@ public class RolesController {
 		if (role == null)
 			throw new RoleNotFoundException("Role Not found for given id=" + id);
 		return new ResponseEntity<>(role, HttpStatus.OK);
-	}
+	}*/
 
 	@GetMapping
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
