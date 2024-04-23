@@ -1,5 +1,6 @@
 package com.identity.service.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.io.Serializable;
@@ -22,6 +23,7 @@ public class Roles implements Serializable {
 	private String requestUserName;
 	private String status;
 
+	@JsonIgnore
 	private short flagId;
 	private Boolean isDisabled;
 

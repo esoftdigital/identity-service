@@ -68,7 +68,7 @@ public class RolesController {
 
 	@GetMapping
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-	public ResponseEntity<Object> getAllRoles() {
+	public ResponseEntity<?> getAllRoles() {
 
 		List<Roles> roleList = roleService.findAll();
 		if (roleList.isEmpty())
@@ -78,7 +78,7 @@ public class RolesController {
 	
 	@PutMapping("/update")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Roles> updateRole(@RequestBody Roles role) {
+	public ResponseEntity<?> updateRole(@RequestBody Roles role) {
 		Roles savedRole = roleService.update(role);
 		return new ResponseEntity<>(savedRole, HttpStatus.CREATED);
 	}
