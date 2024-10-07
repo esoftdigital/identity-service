@@ -10,7 +10,7 @@ spring:
   application:
     name: IDENTITY-SERVICE
   datasource:
-    url: jdbc:postgresql://localhost:5432/users
+    url: jdbc:postgresql://localhost:5432/eSoftDigitalPlatform
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: Admin@123
