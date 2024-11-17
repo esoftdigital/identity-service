@@ -72,7 +72,14 @@ public class User {
 	private String genderId;
 
 	private Date changePasswordAt;
-
+	private Short countryId;
+	private Short clientId;
+	private String hobbyIds;
+	private short attemptCount;
+	private Date expiryDate;
+	private String clientName;
+	private String countryName;
+	private String profileSettingValue;
 	private byte[] image;
 
 	@Size(max = 30)

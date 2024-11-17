@@ -28,6 +28,11 @@ public class Util {
     public final static short USER_CHECK_AVAILABILITY_FLAG = 9;
     public final static short USER_SAVE_FLAG = 10;
     public final static short USER_USERID_FLAG = 11;
-    
 
+    public final static short GET_USER_DETAILS = 1;
+    public final static short GET_USER_ROLE = 2;
+    public final static short GET_USER_DETAILS_BY_NAME = 3;
+    public final static short INSERT_REFRESH_TOKEN = 4;
+    public final static short DELETE_REFRESH_TOKEN = 6;
+    public final static short GET_REFRESH_TOKEN = 5;
 }

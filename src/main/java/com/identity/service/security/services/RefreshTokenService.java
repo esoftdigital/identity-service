@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.identity.service.models.RefreshTokens;
+import com.identity.service.models.Users;
+import com.identity.service.service.GetUserLoginDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,9 +29,15 @@ public class RefreshTokenService {
   @Autowired
   private UserRepository userRepository;
 
-  public Optional<RefreshToken> findByToken(String token) {
-    return refreshTokenRepository.findByToken(token);
+  @Autowired
+  GetUserLoginDetailService getUserLoginDetailService;
+
+  public Optional<RefreshTokens> findByToken(String token) {
+    Users users = new Users();
+    users.setPassword(token);
+    return Optional.of(getUserLoginDetailService.getRefreshToken(users));
   }
+
 
   public RefreshToken createRefreshToken(Long userId) {
     RefreshToken refreshToken = new RefreshToken();
@@ -40,14 +49,30 @@ public class RefreshTokenService {
     refreshToken = refreshTokenRepository.save(refreshToken);
     return refreshToken;
   }
+  public RefreshTokens createRefreshToken(String username, Long userId) {
+    RefreshTokens refreshToken = new RefreshTokens();
+    Users user = new Users();
+    user.setUserId(Integer.parseInt(userId.toString()));
+    String token = UUID.randomUUID().toString();
+    user.setExpiryDate(new Date(System.currentTimeMillis()+refreshTokenDurationMs));
+    user.setPassword(token);
+    user.setLoginName(username);
+    user.setRequestUserName(username);
+    refreshToken = getUserLoginDetailService.insertRefreshToken(user);
+    if(refreshToken.getResponseCode().equals("000")){
+      refreshToken = getUserLoginDetailService.getRefreshToken(user);
+    }
+    return refreshToken;
+  }
 
-  public RefreshToken verifyExpiration(RefreshToken token) {
+  public RefreshTokens verifyExpiration(RefreshTokens token) {
+    Users users = new Users();
+    users.setPassword(token.getToken());
     if (token.getExpiryDate().compareTo(new Date(System.currentTimeMillis())) < 0) {
-      refreshTokenRepository.delete(token);
+      getUserLoginDetailService.deleteRefreshToken(users);
       throw new TokenRefreshException(token.getToken(), "Refresh token was expired. Please make a new signin request");
     }
-
-    return token;
+    return getUserLoginDetailService.getRefreshToken(users);
   }
 
   @Transactional
