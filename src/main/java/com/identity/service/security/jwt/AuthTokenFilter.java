@@ -3,6 +3,7 @@ package com.identity.service.security.jwt;
 
 import java.io.IOException;
 
+import com.identity.service.service.GetUserLoginDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
   @Autowired
   private UserDetailsServiceImpl userDetailsService;
 
+  @Autowired
+  GetUserLoginDetailService getUserLoginDetailService;
+
   private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
   @Override
@@ -46,8 +50,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        
-        
+
       }
     } catch (Exception e) {
       logger.error("Cannot set user authentication: {}", e.getMessage());

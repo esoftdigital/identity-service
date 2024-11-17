@@ -3,6 +3,8 @@ package com.identity.service.controllers;
 import java.util.List;
 import java.util.Map;
 
+import com.identity.service.models.Roles;
+import com.identity.service.service.GetUserLoginDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +25,13 @@ import com.identity.service.service.UserService;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserConteroller {
+public class UserController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	GetUserLoginDetailService getUserLoginDetailService;
 	
 	@Autowired
     PasswordEncoder encoder;
@@ -114,6 +119,16 @@ public class UserConteroller {
 		users.setClientId(clientId);
 		users.setLoginName(loginName);
 		return userService.getUserCheckAvailability(users);
+	}
+
+	@PostMapping("/getLoginDetails")
+	public Users getLoginDetails(@RequestBody Users user){
+		return getUserLoginDetailService.getUserLoginDetail(user);
+	}
+
+	@PostMapping("/getLoginRoleDetails")
+	public Roles getLoginRoleDetails(@RequestBody Users user){
+		return getUserLoginDetailService.getUserLoginRoleDetails(user);
 	}
 
 }
